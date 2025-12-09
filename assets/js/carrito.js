@@ -88,7 +88,7 @@ const carrito = {
     },
 
     totalConImpuestos: function(){
-        let total = this.subtotal() + this.totalDelivery();
+        let total = this.subtotal() + this.totalDelivery() - this.descuentos;
         return total;
     },
     totalDelivery: function(){
@@ -97,5 +97,40 @@ const carrito = {
         }else{
             return 0;
         }
+    },
+    ingresoCupon(cupon){
+        let cuponesValidos = ["PROMO10", "ENVIOGRATIS"];
+
+        if(cuponesValidos.includes(cupon)){
+            // SIGO CON LA APLICACIÓN DEL DESCUENTO
+            
+
+            if(cupon == "PROMO10"){
+
+                let subtotal = this.subtotal();
+                this.descuentos  = subtotal* 0.1;
+
+                if(subtotal >= 30000){
+                    this.descuentos  = subtotal* 0.1;
+                }
+
+                return true;
+
+            }else if(cupon == "ENVIOGRATIS"){
+
+                if(this.subtotal() >= 25000){
+                    this.delivery = 0;
+                }
+                
+                return true;
+
+            }else {
+                return false;
+            }
+
+        }else {
+            return false;
+        }
+
     }
 };

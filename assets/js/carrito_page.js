@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     //PRODUCTOS INICIALES DEL CARRITO
     carrito.agregarProducto(1, 2);
+    carrito.agregarProducto(1, 3)
     carrito.agregarProducto(2, 1);
     carrito.agregarProducto(3, 5);
 
@@ -75,6 +76,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         document.getElementById("subtotal").innerText = carrito.subtotal().toLocaleString("es-CL");
         document.getElementById("total-con-impuestos").innerText = carrito.totalConImpuestos().toLocaleString("es-CL");
         document.getElementById("btn-pago").innerText = carrito.totalConImpuestos().toLocaleString("es-CL");
+        document.getElementById("descuentos").innerText = carrito.descuentos.toLocaleString("es-CL");
+
     }
 
 
@@ -87,6 +90,35 @@ document.addEventListener("DOMContentLoaded", (event) => {
             main();
         }
     });
+
+
+    //LÓGICA INGRESO CUPONES
+
+    let elementCodigoCupon = document.getElementById("cod-cupon");
+    let btnCupon = document.getElementById("btn-cupon");
+
+    btnCupon.addEventListener("click", (event) => {
+        let codigoCupon = elementCodigoCupon.value;
+
+        if(codigoCupon.length == 0){
+            alert("Debe ingresar un código de cupón válido");
+        }else {
+
+            let respuesta = carrito.ingresoCupon(codigoCupon);
+
+            if(respuesta){
+                cargarDetalleCobro(carrito);
+                elementCodigoCupon.value = "";
+            }
+            else{
+                alert("Error al intentar ingresar el cupón, debe válidar el código ingresado.");
+            }
+
+        }
+
+
+    });
+
 
 
 

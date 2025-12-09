@@ -78,10 +78,19 @@
                                                 <p class="mb-2">Costo de envío</p>
                                                 <p class="mb-2">$<span id="costo-envio"></span></p>
                                             </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="mb-2">Descuentos</p>
+                                                <p class="mb-2"> - $<span id="descuentos"></span></p>
+                                            </div>
 
                                             <div class="d-flex justify-content-between mb-4">
                                                 <p class="mb-2">Total(Incl. taxes)</p>
                                                 <p class="mb-2">$<span id="total-con-impuestos"></span></p>
+                                            </div>
+                                            <div class="py-2">
+                                                <label for="cod-cupon" class="form-label">Ingresar Cupón</label>
+                                                <input type="text" class="form-control" id="cod-cupon" name="cupon">
+                                                <button class="btn btn-success my-1" id="btn-cupon">Ingresar</button>
                                             </div>
 
                                             <button type="button" data-mdb-button-init data-mdb-ripple-init
