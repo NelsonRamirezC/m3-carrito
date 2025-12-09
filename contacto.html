@@ -4,16 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 <body>
 
 
+    <section class="container">
+        <h2 class="text-center py-3">Ponte en contacto con nosotros.</h2>
+        <form action="" id="formulario-contacto">
+            <div>
+                <label for="contacto-nombre" class="form-label">Nombre:</label>
+                <input type="text" name="nombre" id="contacto-nombre" class="form-control" required>
+                <small id="contactoErrorNombre" class="text-danger d-none">El nombre no es válido</small>
+            </div>
+            <div>
+                <label for="contacto-correo" class="form-label">Correo:</label>
+                <input type="email" name="correo" id="contacto-correo" class="form-control" required>
+            </div>
+            <div>
+                <label for="contacto-mensaje" class="form-label">Deja tu mensaje:</label>
+                <textarea name="mensaje" id="contacto-mensaje" class="form-control" required minlength="50" maxlength="500"></textarea>
+                <small>Cantidad de caracteres: [50-500]</small>
+            </div>
+            <div class="my-3">
+                <input type="submit" class="btn btn-primary" value="Enviar">
+            </div>
+        </form>
+
+    </section>
 
 
     <script>
 
+        let formularioContacto = document.getElementById("formulario-contacto");
+
+        formularioContacto.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            let validacionForm = true;
+
+            let dataForm = new FormData(formularioContacto);
+
+            let nombre = dataForm.get("nombre");
+            let correo = dataForm.get("correo");
+            let mensaje = dataForm.get("mensaje");
 
 
+            //DEFINICIÓN DE PATRONES
+            let regexNombre = /^[a-záéíóúÁÉÍÓÚñÑ]+(?:['\-\s]?[a-záéíóúÁÉÍÓÚñÑ]+)*$/gmi
+            let regexCorreo = /([a-z0-9_]+([.][a-z0-9_]+)*@[a-z0-9_]+([.][a-z0-9_]+)*[.][a-z]{2,5})+$/gmi;
+
+            //validaciones
+
+            //VALIDACIÓN NOMBRE
+            let elementErrorNombre = document.getElementById("contactoErrorNombre");
+            if(!regexNombre.test(nombre)){
+                validacionForm = false;
+                elementErrorNombre.classList.remove("d-none");
+                elementErrorNombre.classList.add("d-block");
+            }
+
+            if(!regexCorreo.test(correo)){
+                validacionForm = false;
+            }else {
+                let dominiosPermitidos = ["gmail.com", "sustantiva.cl"];
+
+                let dominio = correo.split("@")[1];
+
+                if(!dominiosPermitidos.includes(dominio)){
+                    validacionForm = false;
+                    alert('El dominio no es correcto\nDominios permitidos: ["gmail.com", "sustantiva.cl"]');
+                }
+            }
+
+            if(!(mensaje.length >= 50 && mensaje.length <=500)){
+                validacionForm = false;
+            }
+
+
+            if(validacionForm){
+                alert("Enviado el formulario");
+                elementErrorNombre.classList.remove("d-block");
+                elementErrorNombre.classList.add("d-none");
+
+                formularioContacto.reset();
+            }else{
+                alert("Revise los valores ingresados en el form, algo está mal.")
+            }
+
+        });
     </script>
 </body>
 </html>
